@@ -1,6 +1,6 @@
 {
     "name": "dsh-mimo-vision-hint",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "description": "DSH plugin: prompt the agent to dispatch image recognition to an opencode-go mimo-v2.5 subagent",
     "type": "module",
     "main": "lib/index.js",

@@ -1,33 +1,35 @@
 # dsh-mimo-vision-hint
 
-零依赖 DSH 提示插件。效果：向模型系统提示（systemPrompt）注册一段说明，指导模型在识图任务时派出 opencode-go 的 mimo-v2.5 作为识图子代理（workflow 单代理 + provider/model 覆盖），而不是自己直接用 `read_image` 看图；workflow 调用失败时回退为直接使用 `read_image`。
+[English](README.md) | [中文](README.zh.md)
 
-本插件**只注入提示文本**：不注册任何模型工具，也不提供任何 cordis 服务，因此在 agent 组合中挂载时无需 isolate realm。
+A zero-dependency hint plugin for [DeepSeek Harness (DSH)](https://github.com/deepseek-ai). It registers a section in the model's system prompt instructing the agent to dispatch image-recognition tasks to an opencode-go **mimo-v2.5** subagent (a single-agent workflow with provider/model overrides) instead of reading images itself via `read_image`; if the workflow call fails, the agent falls back to `read_image`.
 
-## 安装
+This plugin **only injects prompt text**: it registers no model tools and provides no cordis services, so mounting it in an agent composition needs no isolate realm.
 
-本包是一个 DSH **profile bundle**（manifest 声明了 `dsh.bundle`，自带挂载层），用官方插件命令一条命令装完即用，**无需手改任何 YAML**：
+## Installation
+
+This package is a DSH **profile bundle** (its manifest declares `dsh.bundle` and it ships its own mount layer), so the official plugin command installs *and* mounts it in one step — **no hand-edited YAML required**:
 
 ```sh
-# 从 npm 安装（发布后）
+# from npm (once published)
 dsh plugin --profile web add dsh-mimo-vision-hint
 
-# 或直接从 GitHub 安装
+# or straight from GitHub
 dsh plugin --profile web add github:Isekai-Mfu/dsh-mimo-vision-hint
 ```
 
-`dsh plugin` 会把包装进 profile 的 `node_modules`、记录依赖，并自动把本包的 bundle 层（[`cordis.patch.yml`](cordis.patch.yml)，内容为一条 `insert`）加入 `dsh.profile.bundles` 组合栈——插件随即挂载在 host 层，对部署内所有 agent 预设的新会话生效。
+`dsh plugin` installs the package into the profile's `node_modules`, records the dependency, and — because this package declares a bundle — automatically appends its layer ([`cordis.patch.yml`](cordis.patch.yml), a single `insert` entry) to the profile's `dsh.profile.bundles` composition stack. The plugin then mounts at the host layer and takes effect for every new session of every agent preset in the deployment.
 
-需要本机 PATH 上有 `pnpm`（`dsh plugin` 是它的转发器）。卸载同样一条命令，依赖移除后 bundle 层自动退出组合栈：
+`pnpm` must be on your PATH (`dsh plugin` forwards to it). Uninstalling is equally one command — once the dependency is gone, the bundle layer leaves the composition stack automatically:
 
 ```sh
 dsh plugin --profile web remove dsh-mimo-vision-hint
 ```
 
-### 手动安装（不想用 pnpm 时）
+### Manual installation (without pnpm)
 
-1. 把本包放到 profile 能解析的位置（如 `$DSH_HOME/profiles/web/node_modules/dsh-mimo-vision-hint`）。
-2. 在 profile 的用户补丁层（`$DSH_HOME/profiles/web/cordis.patch.yml`）加一段 insert：
+1. Place this package somewhere the profile can resolve (e.g. `$DSH_HOME/profiles/web/node_modules/dsh-mimo-vision-hint`).
+2. Add an insert entry to the profile's user patch layer (`$DSH_HOME/profiles/web/cordis.patch.yml`):
 
 ```yaml
 - insert:
@@ -35,11 +37,11 @@ dsh plugin --profile web remove dsh-mimo-vision-hint
       name: dsh-mimo-vision-hint
 ```
 
-3. 保存即生效（热重载）；停用就把这段删掉。
+3. Saving takes effect immediately (hot reload); remove the entry to disable.
 
-## 说明
+## Notes
 
-无其他依赖，无配置项。提示文本对所有新会话常驻注入；识图子代理的 provider（`opencode-go`）和模型（`mimo-v2.5`）目前为硬编码，如需变更请直接修改 `lib/index.js` 中的 `SECTION`。注意：不含 workflow 工具的预设（如极简模式）无法照提示派出子代理，模型会按提示回退为直接使用 `read_image`。
+No other dependencies, no configuration options. The prompt text is injected into every new session; the vision subagent's provider (`opencode-go`) and model (`mimo-v2.5`) are currently hard-coded — edit `SECTION` in `lib/index.js` to change them. Presets without the workflow tool (e.g. minimal mode) cannot dispatch the subagent; the prompt tells the model to fall back to `read_image` in that case.
 
 ## License
 
