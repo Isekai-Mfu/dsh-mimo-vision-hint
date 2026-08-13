@@ -1,0 +1,7 @@
+# Bundle layer of dsh-mimo-vision-hint: mount the hint plugin on the profile root.
+# `dsh plugin --profile <name> add dsh-mimo-vision-hint` picks this layer up
+# automatically (the manifest declares `dsh.bundle`), so no hand-edited YAML is
+# needed; removing the dependency drops the layer again.
+- insert:
+    - id: mimo-vision
+      name: dsh-mimo-vision-hint

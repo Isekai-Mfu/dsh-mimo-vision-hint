@@ -1,6 +1,6 @@
 {
     "name": "dsh-mimo-vision-hint",
-    "version": "0.2.1",
+    "version": "0.3.0",
     "description": "DSH plugin: prompt the agent to dispatch image recognition to an opencode-go mimo-v2.5 subagent",
     "type": "module",
     "main": "lib/index.js",
@@ -8,8 +8,14 @@
         ".": "./lib/index.js"
     },
     "files": [
-        "lib"
+        "lib",
+        "cordis.patch.yml"
     ],
+    "dsh": {
+        "bundle": {
+            "patch": "./cordis.patch.yml"
+        }
+    },
     "author": "Isekai-Mfu (https://github.com/Isekai-Mfu)",
     "repository": {
         "type": "git",
