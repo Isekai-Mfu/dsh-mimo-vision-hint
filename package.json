@@ -1,0 +1,30 @@
+{
+    "name": "dsh-mimo-vision-hint",
+    "version": "0.2.1",
+    "description": "DSH plugin: prompt the agent to dispatch image recognition to an opencode-go mimo-v2.5 subagent",
+    "type": "module",
+    "main": "lib/index.js",
+    "exports": {
+        ".": "./lib/index.js"
+    },
+    "files": [
+        "lib"
+    ],
+    "author": "Isekai-Mfu (https://github.com/Isekai-Mfu)",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Isekai-Mfu/dsh-mimo-vision-hint.git"
+    },
+    "homepage": "https://github.com/Isekai-Mfu/dsh-mimo-vision-hint#readme",
+    "bugs": "https://github.com/Isekai-Mfu/dsh-mimo-vision-hint/issues",
+    "keywords": [
+        "dsh",
+        "deepseek-harness",
+        "cordis",
+        "plugin",
+        "system-prompt",
+        "vision",
+        "subagent"
+    ],
+    "license": "MIT"
+}
