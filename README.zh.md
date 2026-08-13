@@ -18,10 +18,6 @@
 本包是一个 DSH **profile bundle**（manifest 声明了 `dsh.bundle`，自带挂载层），用官方插件命令一条命令装完即用，**无需手改任何 YAML**：
 
 ```sh
-# 从 npm 安装（发布后）
-dsh plugin --profile web add dsh-mimo-vision-hint
-
-# 或直接从 GitHub 安装
 dsh plugin --profile web add github:Isekai-Mfu/dsh-mimo-vision-hint
 ```
 

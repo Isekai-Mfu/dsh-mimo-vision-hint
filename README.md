@@ -18,10 +18,6 @@ Without these, the plugin does no harm: the injected prompt tells the agent to f
 This package is a DSH **profile bundle** (its manifest declares `dsh.bundle` and it ships its own mount layer), so the official plugin command installs *and* mounts it in one step — **no hand-edited YAML required**:
 
 ```sh
-# from npm (once published)
-dsh plugin --profile web add dsh-mimo-vision-hint
-
-# or straight from GitHub
 dsh plugin --profile web add github:Isekai-Mfu/dsh-mimo-vision-hint
 ```
 
