@@ -2,9 +2,16 @@
 
 [English](README.md) | [中文](README.zh.md)
 
-A zero-dependency hint plugin for [DeepSeek Harness (DSH)](https://github.com/deepseek-ai). It registers a section in the model's system prompt instructing the agent to dispatch image-recognition tasks to an opencode-go **mimo-v2.5** subagent (a single-agent workflow with provider/model overrides) instead of reading images itself via `read_image`; if the workflow call fails, the agent falls back to `read_image`.
+A zero-dependency hint plugin for DeepSeek Harness (DSH). It registers a section in the model's system prompt instructing the agent to dispatch image-recognition tasks to an opencode-go **mimo-v2.5** subagent (a single-agent workflow with provider/model overrides) instead of reading images itself via `read_image`; if the workflow call fails, the agent falls back to `read_image`.
 
 This plugin **only injects prompt text**: it registers no model tools and provides no cordis services, so mounting it in an agent composition needs no isolate realm.
+
+## Prerequisites
+
+- Your DSH deployment has a provider named **`opencode-go`** configured, serving a **`mimo-v2.5`** model — the subagent dispatch targets that provider/model pair.
+- The active agent preset includes the **workflow** tool (needed to spawn the subagent).
+
+Without these, the plugin does no harm: the injected prompt tells the agent to fall back to `read_image` directly.
 
 ## Installation
 

@@ -6,6 +6,13 @@
 
 本插件**只注入提示文本**：不注册任何模型工具，也不提供任何 cordis 服务，因此在 agent 组合中挂载时无需 isolate realm。
 
+## 前置条件
+
+- 你的 DSH 部署里已配置名为 **`opencode-go`** 的 provider，并提供 **`mimo-v2.5`** 模型——子代理派发的目标就是这个 provider/model 组合。
+- 当前 agent 预设包含 **workflow** 工具（派出子代理需要它）。
+
+不满足也不碍事：注入的提示会让模型直接回退为使用 `read_image`。
+
 ## 安装
 
 本包是一个 DSH **profile bundle**（manifest 声明了 `dsh.bundle`，自带挂载层），用官方插件命令一条命令装完即用，**无需手改任何 YAML**：
